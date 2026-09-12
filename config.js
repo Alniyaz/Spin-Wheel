@@ -25,7 +25,7 @@ window.SPIN_WHEEL_CONFIG = {
       weight: 1
     },
     {
-      title: "Surprise Gift 1",
+      title: "Surprise Gift",
       type: "surprise",
       emoji: "🎁",
       image: "",
@@ -39,7 +39,7 @@ window.SPIN_WHEEL_CONFIG = {
       weight: 1
     },
     {
-      title: "Surprise Gift 2",
+      title: "Surprise Gift",
       type: "surprise",
       emoji: "🎊",
       image: "",
@@ -53,7 +53,7 @@ window.SPIN_WHEEL_CONFIG = {
       weight: 1
     },
     {
-      title: "Surprise Gift 3",
+      title: "Surprise Gift",
       type: "surprise",
       emoji: "🎁",
       image: "",
