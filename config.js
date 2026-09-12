@@ -9,7 +9,7 @@
  * Increase a prize's weight to make it more likely to be selected.
  */
 window.SPIN_WHEEL_CONFIG = {
-  title: "30th Ariant Anniversary",
+  title: "Ariant 30th Anniversary",
   eyebrow: "CELEBRATION SPECIAL",
   logoImage: "assets/ariant-logo.png",
   spinButtonText: "SPIN THE WHEEL",
