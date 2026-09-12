@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffd900" />
+    <meta
+      name="description"
+      content="Celebrate Ariant's 30th anniversary with the special prize spin wheel."
+    />
+    <title>Spin Wheel</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/ariant-logo.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="title-panel">
+        <p class="eyebrow" id="eyebrow">CELEBRATION SPECIAL</p>
+        <h1 id="game-title">30th Ariant Anniversary</h1>
+        <div class="title-rule" aria-hidden="true">
+          <span></span><span class="diamond"></span><span></span>
+        </div>
+      </header>
+
+      <section class="game-stage" aria-labelledby="game-title">
+        <div class="spark spark-one" aria-hidden="true">✦</div>
+        <div class="spark spark-two" aria-hidden="true">✦</div>
+        <div class="spark spark-three" aria-hidden="true">✦</div>
+
+        <div class="wheel-wrap">
+          <div class="pointer" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="wheel-rim">
+            <div class="wheel-rotator" id="wheel-rotator">
+              <canvas id="wheel" width="900" height="900" aria-label="Prize wheel"></canvas>
+            </div>
+            <div class="center-logo">
+              <img id="center-logo" src="assets/ariant-logo.png" alt="Ariant logo" />
+            </div>
+            <div class="rim-lights" id="rim-lights" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <p id="instruction">Tap the button and win your anniversary surprise!</p>
+          <button class="spin-button" id="spin-button" type="button">
+            <span id="spin-button-label">SPIN THE WHEEL</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="status" id="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <footer>
+        <span>30 YEARS</span>
+        <span class="footer-star" aria-hidden="true">★</span>
+        <span>ONE CELEBRATION</span>
+      </footer>
+    </main>
+
+    <div class="result-backdrop" id="result-backdrop" hidden>
+      <section class="result-card" role="dialog" aria-modal="true" aria-labelledby="result-title">
+        <button class="close-result" id="close-result" type="button" aria-label="Close result">×</button>
+        <p class="result-kicker" id="result-kicker">CONGRATULATIONS!</p>
+        <div class="result-icon" id="result-icon" aria-hidden="true">🎁</div>
+        <h2 id="result-title">You won a surprise!</h2>
+        <p id="result-copy">Collect your gift from our team.</p>
+        <button class="result-action" id="result-action" type="button">NEXT PLAYER</button>
+      </section>
+    </div>
+
+    <canvas id="confetti" aria-hidden="true"></canvas>
+  </body>
+</html>
