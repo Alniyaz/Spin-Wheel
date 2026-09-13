@@ -5,6 +5,7 @@
   --red-dark: #a80008;
   --white: #ffffff;
   --ink: #231509;
+  --blue: #009DDB;
   --shadow: 0 18px 0 rgba(121, 0, 7, 0.18);
 }
 
@@ -147,7 +148,7 @@ h1 {
   box-shadow:
     0 0 0 clamp(7px, 1.2vw, 13px) var(--red),
     0 0 0 clamp(10px, 1.8vw, 20px) var(--white),
-    0 0 0 clamp(14px, 2.6vw, 28px) var(--red);
+    0 0 0 clamp(14px, 2.6vw, 28px) var(--blue);
 }
 
 .wheel-rotator {
