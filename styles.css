@@ -143,11 +143,11 @@ h1 {
   padding: 4.4%;
   overflow: visible;
   background: #d71920;
-  border: clamp(5px, 1vw, 10px) solid #ffffff;
+  border: clamp(5px, 1vw, 10px) solid #009DDB;
   border-radius: 50%;
   box-shadow:
     0 0 0 clamp(7px, 1.2vw, 13px) #d71920,
-    0 0 0 clamp(12px, 2vw, 22px) #009DDB;
+    0 0 0 clamp(12px, 2vw, 22px) #ffffff;
 }
 
 .wheel-rotator {
