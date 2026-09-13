@@ -306,4 +306,5 @@
   preloadPrizeImages();
   drawWheel();
   registerWebMcpTool();
+  spinButton.focus();
 })();
