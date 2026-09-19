@@ -60,6 +60,10 @@
             <span id="spin-button-label">SPIN THE WHEEL</span>
             <span class="button-arrow" aria-hidden="true">→</span>
           </button>
+          <button class="music-button" id="music-toggle" type="button" aria-pressed="true">
+            <span aria-hidden="true">♫</span>
+            <span id="music-toggle-label">MUSIC: LOADING</span>
+          </button>
           <p class="status" id="status" aria-live="polite"></p>
         </div>
       </section>
@@ -77,5 +81,7 @@
     </div>
 
     <canvas id="confetti" aria-hidden="true"></canvas>
+    <audio id="background-music" preload="auto" playsinline></audio>
+    <audio id="clap-sound" preload="auto" playsinline></audio>
   </body>
 </html>

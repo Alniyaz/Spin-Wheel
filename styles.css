@@ -293,6 +293,44 @@ h1 {
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
+.music-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 18px;
+  padding: 10px 16px;
+  color: var(--red-dark);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: var(--yellow-light);
+  border: 3px solid var(--red);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.music-button:hover {
+  background: var(--yellow);
+  transform: translateY(-2px);
+}
+
+.music-button:active { transform: translateY(2px); }
+
+.music-button:focus-visible {
+  outline: 4px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.music-button[aria-pressed="false"] {
+  color: #65584e;
+  background: #eee8dc;
+  border-color: #8b7e73;
+}
+
 .spin-button:hover,
 .result-action:hover {
   background: var(--red-dark);

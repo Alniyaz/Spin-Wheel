@@ -22,6 +22,10 @@
   const closeResult = document.getElementById("close-result");
   const confettiCanvas = document.getElementById("confetti");
   const confettiCtx = confettiCanvas.getContext("2d");
+  const musicToggle = document.getElementById("music-toggle");
+  const musicToggleLabel = document.getElementById("music-toggle-label");
+  const backgroundMusic = document.getElementById("background-music");
+  const clapSound = document.getElementById("clap-sound");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   let rotation = 0;
@@ -29,13 +33,105 @@
   let currentPrize = null;
   let lastFocused = null;
   let confettiFrame = null;
+  let musicEnabled = config.audio?.enabled !== false;
+  let songIndex = 0;
+  let songPlaylist = [];
+  let clapPlaylist = [];
   const prizeImages = new Map();
+  const supportedAudio = /\.(mp3|wav|ogg|m4a|aac|flac|webm)$/i;
 
   document.getElementById("game-title").textContent = config.title;
   document.getElementById("eyebrow").textContent = config.eyebrow;
   document.getElementById("center-logo").src = config.logoImage;
   document.getElementById("instruction").textContent = config.instruction;
   buttonLabel.textContent = config.spinButtonText;
+
+  function audioPath(folder, file) {
+    if (/^(https?:)?\/\//i.test(file) || file.startsWith("data:")) return file;
+    if (file.includes("/")) return file;
+    return `${folder.replace(/\/$/, "")}/${file}`;
+  }
+
+  async function discoverAudio(folder, configuredFiles = []) {
+    const configured = configuredFiles
+      .filter((file) => typeof file === "string" && supportedAudio.test(file))
+      .map((file) => audioPath(folder, file));
+    const repository = config.audio?.repository;
+    if (!repository) return configured;
+
+    const branch = encodeURIComponent(config.audio?.branch || "main");
+    const apiUrl = `https://api.github.com/repos/${repository}/contents/${folder}?ref=${branch}`;
+    try {
+      const response = await fetch(apiUrl, { headers: { Accept: "application/vnd.github+json" } });
+      if (!response.ok) return configured;
+      const entries = await response.json();
+      const discovered = entries
+        .filter((entry) => entry.type === "file" && supportedAudio.test(entry.name))
+        .map((entry) => entry.download_url);
+      return discovered.length > 0 ? discovered : configured;
+    } catch (_) {
+      return configured;
+    }
+  }
+
+  function updateMusicButton(message) {
+    musicToggle.setAttribute("aria-pressed", String(musicEnabled));
+    musicToggleLabel.textContent = message || (musicEnabled ? "MUSIC: ON" : "MUSIC: OFF");
+  }
+
+  async function playCurrentSong() {
+    if (!musicEnabled || songPlaylist.length === 0) return;
+    if (!backgroundMusic.src) backgroundMusic.src = songPlaylist[songIndex];
+    backgroundMusic.volume = Math.min(1, Math.max(0, Number(config.audio?.backgroundVolume) || 0.35));
+    try {
+      await backgroundMusic.play();
+      updateMusicButton();
+    } catch (_) {
+      updateMusicButton("PLAY MUSIC");
+    }
+  }
+
+  function playNextSong() {
+    if (songPlaylist.length === 0) return;
+    songIndex = (songIndex + 1) % songPlaylist.length;
+    backgroundMusic.src = songPlaylist[songIndex];
+    void playCurrentSong();
+  }
+
+  function toggleMusic() {
+    musicEnabled = !musicEnabled;
+    if (musicEnabled) void playCurrentSong();
+    else backgroundMusic.pause();
+    updateMusicButton();
+  }
+
+  function playClap() {
+    if (clapPlaylist.length === 0) return;
+    const clapIndex = Math.floor(Math.random() * clapPlaylist.length);
+    clapSound.src = clapPlaylist[clapIndex];
+    clapSound.volume = Math.min(1, Math.max(0, Number(config.audio?.clapVolume) || 0.9));
+    if (musicEnabled && !backgroundMusic.paused) backgroundMusic.volume *= 0.35;
+    void clapSound.play().catch(() => {});
+  }
+
+  async function initializeAudio() {
+    if (!config.audio) {
+      musicToggle.hidden = true;
+      return;
+    }
+    [songPlaylist, clapPlaylist] = await Promise.all([
+      discoverAudio(config.audio.songFolder, config.audio.songFiles),
+      discoverAudio(config.audio.clapFolder, config.audio.clapFiles)
+    ]);
+    if (songPlaylist.length === 0) {
+      musicEnabled = false;
+      updateMusicButton("ADD SONGS TO PLAY");
+      musicToggle.disabled = true;
+      return;
+    }
+    updateMusicButton();
+    void playCurrentSong();
+  }
 
   function makeRimLights() {
     const container = document.getElementById("rim-lights");
@@ -189,6 +285,7 @@
     status.textContent = isRetry ? "One more chance unlocked!" : `Winner: ${prize.title}`;
 
     if (!prefersReducedMotion.matches) launchConfetti(isRetry ? 75 : 140);
+    playClap();
   }
 
   function closeModal(resetForNextPlayer = false) {
@@ -291,7 +388,18 @@
     }
   }
 
-  spinButton.addEventListener("click", () => void spin());
+  spinButton.addEventListener("click", () => {
+    void playCurrentSong();
+    void spin();
+  });
+  musicToggle.addEventListener("click", toggleMusic);
+  backgroundMusic.addEventListener("ended", playNextSong);
+  backgroundMusic.addEventListener("error", playNextSong);
+  clapSound.addEventListener("ended", () => {
+    if (musicEnabled) backgroundMusic.volume = Math.min(1, Math.max(0, Number(config.audio?.backgroundVolume) || 0.35));
+  });
+  document.addEventListener("pointerdown", () => void playCurrentSong(), { once: true });
+  document.addEventListener("keydown", () => void playCurrentSong(), { once: true });
   resultAction.addEventListener("click", handleResultAction);
   closeResult.addEventListener("click", () => closeModal(true));
   backdrop.addEventListener("click", (event) => {
@@ -306,5 +414,6 @@
   preloadPrizeImages();
   drawWheel();
   registerWebMcpTool();
+  void initializeAudio();
   spinButton.focus();
 })();

@@ -16,6 +16,23 @@ window.SPIN_WHEEL_CONFIG = {
   instruction: "Tap the button and win your anniversary surprise!",
   spinDurationMs: 5200,
 
+  /**
+   * Put background songs in assets/song and applause sounds in assets/clap.
+   * When this site is online, supported audio files are found automatically.
+   * For offline/local use, add filenames to songFiles and clapFiles below.
+   */
+  audio: {
+    enabled: true,
+    repository: "Alniyaz/Spin-Wheel",
+    branch: "main",
+    songFolder: "assets/song",
+    clapFolder: "assets/clap",
+    songFiles: ["celebration-theme.wav"],
+    clapFiles: ["gift-applause.wav"],
+    backgroundVolume: 0.35,
+    clapVolume: 0.9
+  },
+
   prizes: [
     {
       title: "Dairy Milk",
