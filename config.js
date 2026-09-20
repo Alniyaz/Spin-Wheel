@@ -35,7 +35,7 @@ window.SPIN_WHEEL_CONFIG = {
 
   prizes: [
     {
-      title: "Dairy Milk",
+      title: "Chocolate",
       type: "chocolate",
       emoji: "🍫",
       image: "",
@@ -49,7 +49,7 @@ window.SPIN_WHEEL_CONFIG = {
       weight: 1
     },
     {
-      title: "Dairy Milk",
+      title: "Chocolate",
       type: "chocolate",
       emoji: "🍫",
       image: "",
