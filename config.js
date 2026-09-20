@@ -42,9 +42,9 @@ window.SPIN_WHEEL_CONFIG = {
       weight: 1
     },
     {
-      title: "Surprise Gift",
-      type: "surprise",
-      emoji: "🎁",
+      title: "Chocolate",
+      type: "chocolate",
+      emoji: "🍫",
       image: "",
       weight: 1
     },
