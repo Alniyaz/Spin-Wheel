@@ -40,9 +40,15 @@
   const prizeImages = new Map();
   const supportedAudio = /\.(mp3|wav|ogg|m4a|aac|flac|webm)$/i;
 
+  function showConnectionStatus() {
+    if (!navigator.onLine) status.textContent = "Offline mode — the cached game is ready.";
+  }
+
   document.getElementById("game-title").textContent = config.title;
   document.getElementById("eyebrow").textContent = config.eyebrow;
   document.getElementById("center-logo").src = config.logoImage;
+  document.getElementById("center-logo").alt = config.logoAlt || "HOTMALE logo";
+  document.getElementById("control-logo").src = config.logoImage;
   document.getElementById("instruction").textContent = config.instruction;
   buttonLabel.textContent = config.spinButtonText;
 
@@ -165,16 +171,26 @@
     config.prizes.forEach((prize, index) => {
       const start = startOffset + index * segmentAngle;
       const end = start + segmentAngle;
-      const isRed = index % 2 === 0;
+      const isGold = index % 2 === 0;
 
       ctx.beginPath();
       ctx.moveTo(center, center);
       ctx.arc(center, center, radius, start, end);
       ctx.closePath();
-      ctx.fillStyle = isRed ? "#d71920" : "#ffffff";
+      const segmentGradient = ctx.createRadialGradient(center, center, 20, center, center, radius);
+      if (isGold) {
+        segmentGradient.addColorStop(0, "#6f4a10");
+        segmentGradient.addColorStop(0.48, "#c8952f");
+        segmentGradient.addColorStop(1, "#f3d778");
+      } else {
+        segmentGradient.addColorStop(0, "#303030");
+        segmentGradient.addColorStop(0.55, "#161616");
+        segmentGradient.addColorStop(1, "#050505");
+      }
+      ctx.fillStyle = segmentGradient;
       ctx.fill();
-      ctx.lineWidth = 7;
-      ctx.strokeStyle = "#ffd900";
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = "#e6bd55";
       ctx.stroke();
 
       const angle = start + segmentAngle / 2;
@@ -189,12 +205,15 @@
         const imageSize = 76;
         ctx.drawImage(prizeImage, radius * 0.66 - imageSize / 2, -87, imageSize, imageSize);
       } else {
-        ctx.fillStyle = isRed ? "#ffffff" : "#d71920";
+        ctx.fillStyle = isGold ? "#090909" : "#f4ce68";
         ctx.font = "700 34px Montserrat, Arial, sans-serif";
         ctx.fillText(prize.emoji || "🎁", radius * 0.66, -42);
       }
 
       const lines = splitTitle(prize.title.toUpperCase());
+      ctx.fillStyle = isGold ? "#090909" : "#fffdf5";
+      ctx.shadowColor = isGold ? "rgba(255,255,255,.16)" : "rgba(0,0,0,.9)";
+      ctx.shadowBlur = 5;
       ctx.font = "900 27px Montserrat, Arial, sans-serif";
       lines.forEach((line, lineIndex) => {
         ctx.fillText(line, radius * 0.63, 10 + lineIndex * 34);
@@ -205,7 +224,7 @@
     ctx.beginPath();
     ctx.arc(center, center, radius, 0, Math.PI * 2);
     ctx.lineWidth = 15;
-    ctx.strokeStyle = "#ffffff";
+    ctx.strokeStyle = "#fff4c8";
     ctx.stroke();
   }
 
@@ -310,7 +329,7 @@
     confettiCanvas.height = window.innerHeight * ratio;
     confettiCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    const colors = ["#ffd900", "#d71920", "#ffffff", "#231509"];
+    const colors = ["#f4ce68", "#a87922", "#ffffff", "#b9b9b9", "#111111"];
     const pieces = Array.from({ length: count }, () => ({
       x: Math.random() * window.innerWidth,
       y: -30 - Math.random() * window.innerHeight * 0.3,
@@ -368,7 +387,7 @@
       void Promise.resolve(modelContext.registerTool({
         name: "complete_prize_spin",
         title: "Spin the prize wheel",
-        description: "Spin the visible Ariant anniversary prize wheel once and return the winning prize after the animation finishes.",
+        description: "Spin the visible HOTMALE 19th anniversary prize wheel once and return the winning prize after the animation finishes.",
         inputSchema: {
           type: "object",
           properties: {},
@@ -400,6 +419,12 @@
   });
   document.addEventListener("pointerdown", () => void playCurrentSong(), { once: true });
   document.addEventListener("keydown", () => void playCurrentSong(), { once: true });
+  window.addEventListener("offline", () => {
+    status.textContent = "Internet disconnected — continuing in offline mode.";
+  });
+  window.addEventListener("online", () => {
+    status.textContent = "Internet connection restored.";
+  });
   resultAction.addEventListener("click", handleResultAction);
   closeResult.addEventListener("click", () => closeModal(true));
   backdrop.addEventListener("click", (event) => {
@@ -414,6 +439,7 @@
   preloadPrizeImages();
   drawWheel();
   registerWebMcpTool();
+  showConnectionStatus();
   void initializeAudio();
   spinButton.focus();
 })();

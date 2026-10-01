@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffd900" />
+    <meta name="theme-color" content="#080808" />
     <meta
       name="description"
-      content="Celebrate Ariant's 30th anniversary with the special prize spin wheel."
+      content="Celebrate HOTMALE's 19th anniversary with the premium prize spin wheel."
     />
-    <title>Spin Wheel</title>
+    <title>HOTMALE 19th Anniversary Spin Wheel</title>
     <link
       rel="icon"
       type="image/png"
-      href="assets/ariant-logo.png"
+      href="assets/hotmale-head.png"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,16 +21,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      }
+    </script>
     <script src="config.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>
+    <div class="ambient-light ambient-light-one" aria-hidden="true"></div>
+    <div class="ambient-light ambient-light-two" aria-hidden="true"></div>
+    <div class="anniversary-stars" aria-hidden="true"></div>
+
     <main class="game-shell">
       <header class="title-panel">
-        <p class="eyebrow" id="eyebrow">CELEBRATION SPECIAL</p>
-        <h1 id="game-title">Ariant 30th Anniversary</h1>
-        <div class="title-rule" aria-hidden="true">
-          <span></span><span class="diamond"></span><span></span>
+        <div class="title-copy">
+          <p class="eyebrow" id="eyebrow">NINETEEN YEARS · ANNIVERSARY EDITION</p>
+          <h1 id="game-title">HOTMALE 19th Anniversary</h1>
+          <div class="title-rule" aria-hidden="true">
+            <span></span><span class="diamond"></span><span></span>
+          </div>
+        </div>
+        <div class="anniversary-seal" aria-label="Celebrating 19 years">
+          <span class="seal-number">19</span>
+          <span class="seal-years">YEARS</span>
         </div>
       </header>
 
@@ -48,13 +63,18 @@
               <canvas id="wheel" width="900" height="900" aria-label="Prize wheel"></canvas>
             </div>
             <div class="center-logo">
-              <img id="center-logo" src="assets/ariant-logo.png" alt="Ariant logo" />
+              <span class="center-halo" aria-hidden="true"></span>
+              <img id="center-logo" src="assets/hotmale-head.png" alt="HOTMALE head logo" />
             </div>
             <div class="rim-lights" id="rim-lights" aria-hidden="true"></div>
           </div>
         </div>
 
         <div class="controls">
+          <div class="control-emblem" aria-hidden="true">
+            <img id="control-logo" src="assets/hotmale-head.png" alt="" />
+          </div>
+          <p class="controls-kicker">19TH ANNIVERSARY DRAW</p>
           <p id="instruction">Tap the button and win your anniversary surprise!</p>
           <button class="spin-button" id="spin-button" type="button">
             <span id="spin-button-label">SPIN THE WHEEL</span>
@@ -73,6 +93,7 @@
       <section class="result-card" role="dialog" aria-modal="true" aria-labelledby="result-title">
         <button class="close-result" id="close-result" type="button" aria-label="Close result">×</button>
         <p class="result-kicker" id="result-kicker">CONGRATULATIONS!</p>
+        <p class="result-anniversary">HOTMALE · 19 YEARS</p>
         <div class="result-icon" id="result-icon" aria-hidden="true">🎁</div>
         <h2 id="result-title">You won a surprise!</h2>
         <p id="result-copy">Collect your gift from our team.</p>

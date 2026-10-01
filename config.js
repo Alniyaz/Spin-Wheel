@@ -1,5 +1,5 @@
 /**
- * ARIANT SPIN WHEEL — EASY EDIT FILE
+ * HOTMALE 19TH ANNIVERSARY SPIN WHEEL — EASY EDIT FILE
  *
  * Change the title, logo, gift names and gift images here.
  * For an image stored inside the assets folder, use a path like:
@@ -9,9 +9,10 @@
  * Increase a prize's weight to make it more likely to be selected.
  */
 window.SPIN_WHEEL_CONFIG = {
-  title: "Ariant 30th Anniversary",
-  eyebrow: "CELEBRATION SPECIAL",
-  logoImage: "assets/ariant-logo.png",
+  title: "HOTMALE 19th Anniversary",
+  eyebrow: "NINETEEN YEARS · ANNIVERSARY EDITION",
+  logoImage: "assets/hotmale-head.png",
+  logoAlt: "HOTMALE head logo",
   spinButtonText: "SPIN THE WHEEL",
   instruction: "Tap the button and win your anniversary surprise!",
   spinDurationMs: 5200,
@@ -35,46 +36,46 @@ window.SPIN_WHEEL_CONFIG = {
 
   prizes: [
     {
-      title: "Chocolate",
-      type: "chocolate",
-      emoji: "🍫",
-      image: "",
-      weight: 1
-    },
-    {
-      title: "Chocolate",
-      type: "chocolate",
-      emoji: "🍫",
-      image: "",
-      weight: 1
-    },
-    {
-      title: "Chocolate",
-      type: "chocolate",
-      emoji: "🍫",
-      image: "",
-      weight: 1
-    },
-    {
-      title: "Chocolate",
-      type: "chocolate",
-      emoji: "🍫",
-      image: "",
-      weight: 1
-    },
-    {
-      title: "Chocolate",
-      type: "chocolate",
-      emoji: "🍫",
-      image: "",
-      weight: 1
-    },
-    {
       title: "Surprise Gift",
       type: "surprise",
       emoji: "🎁",
       image: "",
       weight: 1
+    },
+    {
+      title: "Chocolate",
+      type: "chocolate",
+      emoji: "🍫",
+      image: "",
+      weight: 2
+    },
+    {
+      title: "Surprise Gift",
+      type: "surprise",
+      emoji: "🎊",
+      image: "",
+      weight: 1
+    },
+    {
+      title: "Chocolate",
+      type: "chocolate",
+      emoji: "🍫",
+      image: "",
+      weight: 2
+    },
+    {
+      title: "Surprise Gift",
+      type: "surprise",
+      emoji: "🎊",
+      image: "",
+      weight: 1
+    },
+    {
+      title: "Chocolate",
+      type: "chocolate",
+      emoji: "🍫",
+      image: "",
+      weight: 2
     },
     {
       title: "Try One More Chance",
